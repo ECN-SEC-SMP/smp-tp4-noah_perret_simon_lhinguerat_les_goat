@@ -1,3 +1,5 @@
+
+
 void genererPersonne();
 
 void affichagePersonne();

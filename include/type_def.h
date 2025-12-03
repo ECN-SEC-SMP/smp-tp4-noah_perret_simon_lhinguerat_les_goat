@@ -6,14 +6,14 @@ using namespace std ;
 
 struct personne
 {
-    string Nom;
-    string Prenom;
-    string Numero;
+    string nom;
+    string prenom;
+    string numero;
 };
 
 struct elementListe
 {
-    personne Personne;
+    personne personne;
     elementListe* suivant;
     elementListe* precedent;
 
