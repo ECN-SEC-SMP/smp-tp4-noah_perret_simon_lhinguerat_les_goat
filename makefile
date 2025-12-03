@@ -11,19 +11,19 @@ all: $(EXEC_PROGRAM1) $(EXEC_PROGRAM2)
 $(EXEC_PROGRAM1): 
 	mkdir -p build
 
-$(EXEC_PROGRAM2): ./build/main.o ./build/outils.o ./build/chargesauve.o
-	g++ -o $(EXEC_PROGRAM2) ./build/main.o ./build/outils.o ./build/chargesauve.o
+$(EXEC_PROGRAM2): ./build/main.o ./build/utilitaire.o ./build/utilitaire_generation.o
+	g++ -o $(EXEC_PROGRAM2) ./build/main.o ./build/utilitaire.o ./build/utilitaire_generation.o
 
 
 # Compilation des fichiers sources en fichiers objets
 ./build/main.o: ./main.cpp
 	g++ -I./include -c ./main.cpp -o ./build/main.o
 
-./build/outils.o: ./src/outils.cpp
-	g++ -I./include -c ./src/outils.cpp -o ./build/outils.o
+./build/utilitaire.o: ./src/utilitaire.cpp
+	g++ -I./include -c ./src/utilitaire.cpp -o ./build/utilitaire.o
 
-./build/chargesauve.o: ./src/chargesauve.cpp
-	g++ -I./include -c ./src/chargesauve.cpp -o ./build/chargesauve.o
+./build/utilitaire_generation.o: ./src/utilitaire_generation.cpp
+	g++ -I./include -c ./src/utilitaire_generation.cpp -o ./build/utilitaire_generation.o
 
 
 # Supprime les fichiers objets et l'exécutable
