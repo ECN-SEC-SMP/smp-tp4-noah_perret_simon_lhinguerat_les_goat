@@ -25,134 +25,82 @@ make clean
 
 ### Choix de représentation :
 
-Pour représenter une image, nous utilisons la structure `t_Image`, qui s'appuie sur une taille maximale fixe et une matrice pour stocker les pixels
+
+# 2 - TRUCTURES DE DONNÉES
+
+## Q1) Structure `personne` :
+
+Pour représenter une personne, nous utilisons la structure personne, qui contient les informations essentielles sous forme de chaînes de caractères :
 
 ```cpp
-const int TMAX = 800; // taille maximale des images
-
-// Matrice d'entier pour representer les niveaux de gris des pixels de l'image 
-typedef unsigned int t_MatEnt[TMAX][TMAX]; 
-
-// On définit la structure de données pour représenter une image
-struct t_Image
+struct personne
 {
-    int w; // largeur de l'image
-    int h; // hauteur de l'image
-    t_MatEnt im; // tableau des niveaux de gris de l'image
+    string nom;
+    string prenom;
+    string numero;
 };
 ```
 
 
 **Justification du choix :**
-- **Capacité Maximale** : Une constante TMAX = 800 définit les dimensions maximales (800x800 pixels). <br> Ce choix simplifie la gestion de la mémoire.
-- **Dimensions Réelles** : Les champs w (largeur) et h (hauteur) stockent les dimensions de l'image chargée. 
-- **Stockage des Pixels** : La matrice im (de type t_MatEnt) est un tableau 2D qui stocke la valeur (niveau de gris) de chaque pixel.
-- **Type de Données** : Le type unsigned int est utilisé pour les niveaux de gris. Il permet de stocker les valeurs PGM standards (typiquement comprises entre 0 et 255) tout en offrant une plage supérieure si nécessaire.
+- **Nom et prénom** : Stockés sous forme de string pour permettre la flexibilité de taille et la gestion facile des caractères.
+- **Numéro de téléphone** : Stocké sous forme de string (10 chiffres, sans espaces) pour conserver les zéros initiaux et éviter toute interprétation numérique qui pourrait tronquer ou modifier la valeur.
+- **Simplicité et lisibilité** : L’usage de chaînes de caractères rend la manipulation (affichage, comparaison, tri) simple et intuitive en C++.
+- **Extensibilité** : Cette structure peut être facilement enrichie avec d’autres champs si nécessaire (adresse, email, etc.) sans changer le type de données existant.
 
 ### Exemple de représentation :
 
-Une petite image PGM de 2 pixels de large (w=2) et 2 pixels de haut (h=2):
-
-```pgm
-# Fichier : imgBsc.pgm (format P2 - ASCII)
-P2
-2 2
-255
-255 100
-50 0
-```
-
-Zoom (vue agrandie, représentation pixel par pixel) :
-
-<table>
-    <tr>
-        <td style="padding:6px">
-            <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center;
-                                    background:rgb(255,255,255);color:#000;border:1px solid #999;">
-                (x=0, y=0) : 255
-            </div>
-        </td>
-        <td style="padding:6px">
-            <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center;
-                                    background:rgb(100,100,100);color:#fff;border:1px solid #999;">
-                (x=1, y=0) : 100
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td style="padding:6px">
-            <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center;
-                                    background:rgb(50,50,50);color:#fff;border:1px solid #999;">
-                (x=0, y=1) : 50
-            </div>
-        </td>
-        <td style="padding:6px">
-            <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center;
-                                    background:rgb(0,0,0);color:#fff;border:1px solid #999;">
-                (x=1, y=1) : 0
-            </div>
-        </td>
-    </tr>
-</table>
-
-
-En mémoire (structure t_Image) serait représentée en mémoire comme cela :
+En mémoire, cette organisation permet de gérer efficacement une liste de personnes pour des opérations comme le tri, la recherche ou l’affichage.
 
 ```cpp
-t_Image imgBsc;
-imgBsc.w = 2;
-imgBsc.h = 2;
-imgBsc.im[0][0] = 255;   // pixel (x=0,y=0)
-imgBsc.im[1][0] = 100; // pixel (x=1,y=0)
-imgBsc.im[0][1] = 50; // pixel (x=0,y=1)
-imgBsc.im[1][1] = 0;  // pixel (x=1,y=1)
+personne p1;
+p1.nom = "Dupont";
+p1.prenom = "Jean";
+p1.numero = "0612345678";
 ```
 
-## Q1) Fonctions seuillage et différence :
 
-### Fonction  de seuillage `nom`  (Simon)
+## Q2) Structure `elementList` :
 
-#### Algorithmes
-
-
-<img src="./assets/UML_Seuil.png" alt="Diagramme UML de differencePgm" width="350" />
-
-
-#### Description du principe :
-L'algorithme compare la valeur de chaque pixel de l'image d'entrée à un seuil donné.Si la valeur du pixel est supérieure ou égale au seuil, le pixel de sortie prend la valeur maximale (içi BLANC). Sinon, le pixel de sortie prend la valeur minimale (içi NOIR).
-Cette opération permet de convertir une image en niveaux de gris en une image binaire.
-
-
-#### Prototypes
-```cpp
-void seuil(t_Image * Image,unsigned int sueil);
-```
-
-#### Jeux d'essais 
+Pour représenter une liste de personnes, nous utilisons la structure elementListe, qui permet de créer une liste doublement chaînée :
 
 ```cpp
-void test_seuil(){
-    //Allocation dynamique de l'image
-    t_Image* ptr_img1 = new t_Image;
-    bool success = false; //Indicateur de succès du chargement
-
-    //Chargement de l'image :
-    loadPgm(pathBasic+"lena"+size1+endFile,ptr_img1,success);
-
-    //Binarisation de l'image avec un seuil de 125
-    seuil(ptr_img1,125);
-
-    //Sauvegarde de l'image modifiée :
-    savePgm(pathMod+"lenaSeuil125"+size1+endFile,ptr_img1);
-
-    //Libération de la mémoire :
-    delete ptr_img1;
-}
+struct elementListe
+{
+    personne pers;
+    elementListe* suivant;
+    elementListe* precedent;
+};
 ```
-![test_seuil](assets/lenaseuil.png)
+
+**Justification du choix :**
+- **Double chaînage** : Les pointeurs `suivant` et `precedent` permettent de naviguer dans les deux sens de la liste, ce qui facilite les opérations d’insertion, de suppression et de parcours.
+- **Stockage des données** : Chaque élément contient la structure personne précedemetn définies cela centralise  les informations liées à une personne dans un seul nœud.
+- **Simplicité et flexibilité** : L’utilisation de pointeurs rend la liste dynamique, donc on n’a pas besoin de connaître la taille maximale à l’avance.
+- **Extensibilité** : La structure peut facilement être enrichie si l’on souhaite ajouter d’autres informations pour chaque personne (adresse, email, etc.).
+
+### Exemple de représentation en mémoire:
+
+```cpp
+elementListe* el1 = new elementListe;
+el1->pers.nom = "Dupont";
+el1->pers.prenom = "Jean";
+el1->pers.numero = "0612345678";
+el1->suivant = nullptr;
+el1->precedent = nullptr;
+```
+
+Dans cet exemple, el1 représente un nœud unique de la liste doublement chaînée.
+
+el1->pers contient les informations d’une personne : nom, prénom et numéro de téléphone.
+
+el1->suivant et el1->precedent sont initialisés à nullptr car pour l’instant cet élément n’est relié à aucun autre nœud.
 
 ---
-### Fonction  de différence `differencePgm()`
+
+# 3 - UTILITAIRES
+
+### Fonction  de différence `genererPersonne()`
 
 #### Algorithmes
 
