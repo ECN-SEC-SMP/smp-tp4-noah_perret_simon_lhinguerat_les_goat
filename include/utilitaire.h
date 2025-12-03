@@ -1,5 +1,5 @@
 #pragma once 
-#include "../include/type_def.h"
+#include "type_def.h"
 
 //Prototypes :
 void genererPersonne();
