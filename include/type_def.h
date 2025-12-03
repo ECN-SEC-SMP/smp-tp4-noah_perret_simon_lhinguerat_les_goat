@@ -13,7 +13,7 @@ struct personne
 
 struct elementListe
 {
-    personne personne;
+    personne pers;
     elementListe* suivant;
     elementListe* precedent;
 

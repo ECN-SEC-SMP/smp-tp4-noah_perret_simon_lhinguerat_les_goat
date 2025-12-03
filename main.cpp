@@ -2,6 +2,9 @@
  * Nom1 Nom2
  * TP4
  *
+ * PERRET L'HINGUERAT
+ * TP4 
+ * 
  * .......
  *
  */
@@ -14,9 +17,9 @@ using namespace std;
 int main()
 {
 
-    string nom = genererNomPrenom("Noms_TP4.txt", 1000);
+    /*string nom = genererNomPrenom("Noms_TP4.txt", 1000);
     string prenom = genererNomPrenom("Prenoms_TP4.txt", 11612);
     string tel = genererTel();
     cout << nom << " " << prenom << " " << tel << endl;
-    return 0;
+    return 0;*/
 }

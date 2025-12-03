@@ -2,9 +2,9 @@
 
 **Nom :** PERRET Noah & L'HINGUERAT Simon 
 
-**Groupe :** SEC1
+**Groupe :** SEC28
 
-**Date :** 13 novembre 2025  
+**Date :** 3 décembre 2025  
 
 ## Compilation et exécution
 
