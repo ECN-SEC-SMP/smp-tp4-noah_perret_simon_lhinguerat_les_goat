@@ -46,3 +46,4 @@ bool comparerPersonne(personne p1, personne p2){
     else {
         return  (p1.numero < p2.numero);
     }
+}
