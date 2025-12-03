@@ -1,5 +1,6 @@
 #include "../include/utilitaire.h"
 #include "../include/type_def.h"
+#include <cassert>
 
 
 
@@ -29,9 +30,20 @@ bool egalitePersonne(personne p1, personne p2){
 
 
 bool comparerPersonne(personne p1, personne p2){
+    assert( (p1.nom != p2.nom) || (p1.prenom != p2.prenom) || (p1.numero != p2.numero) );
 
+    // Si les nom son différents
     if (p1.nom != p2.nom){
-        return  p1.nom < p1.nom
-    }
+        return  (p1.nom < p2.nom);
 
+    }
+    // Sinon, les prenom sont différents
+    else if (p1.prenom != p2.prenom){
+
+        return  (p1.prenom < p2.prenom);
+
+    } //Sinon, les numéros :
+    else {
+        return  (p1.numero < p2.numero);
+    }
 }
