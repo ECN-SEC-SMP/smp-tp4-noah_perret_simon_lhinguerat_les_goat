@@ -26,3 +26,12 @@ bool egalitePersonne(personne p1, personne p2){
            (p1.prenom == p2.prenom) &&  
            (p1.numero == p2.numero);
 }
+
+
+bool comparerPersonne(personne p1, personne p2){
+
+    if (p1.nom != p2.nom){
+        return  p1.nom < p1.nom
+    }
+
+}
