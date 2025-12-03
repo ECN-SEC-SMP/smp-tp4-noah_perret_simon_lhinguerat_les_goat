@@ -6,4 +6,4 @@ void genererPersonne();
 elementListe * creerElementListe(string name,string lastName,string phone);
 void affichagePersonne();
 bool egalitePersonne(personne p1, personne p2);
-void comparerPersonne();
+bool comparerPersonne(personne p1, personne p2);
